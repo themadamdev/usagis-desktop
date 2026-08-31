@@ -34,8 +34,8 @@ small {
     margin: 0 1em .5em 1em;
 }
 
-.green-button {
-    @include green-button;
+.pink-button {
+    @include pink-button;
 }
 
 // for nested pages
@@ -51,6 +51,6 @@ small {
 // Overiding default bootstrap accordion
 .accordion-button {
     &:not(.collapsed) {
-        background-color: rgba($color-purple, 0.4);
+        background-color: rgba($color-violet, 0.4);
     }
 }

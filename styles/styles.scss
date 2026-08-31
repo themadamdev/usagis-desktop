@@ -3,14 +3,15 @@ $font-sub-heading: var(--font-sub-heading); //'Josefin Sans', sans-serif;
 $font-heading-title: var(--font-heading-title); //'La Belle Aurore', cursive;
 $font-body: var(--font-body); //'Roboto Slab', serif;
 
-// colors
-$color-white: #F5F0EE; //isabelline
-$color-off-white: #F0E8E5; //isabelline
-$color-black: #141414; // night
-$color-purple: #BAA1AD; //rose quartz
-$color-green: #5A7557; //reseda green
-$color-green-faded: rgba($color-green, 0.8);
-$color-gold: #BF984A; //satin sheen gold
+// colors — retrowave Sailor Moon palette
+$color-white: #FFF6FB; //moonlight
+$color-off-white: #FFE3F5; //petal pink
+$color-black: #241640; //twilight indigo
+$color-violet: #8A2BE2; //electric violet
+$color-pink: #E0218A; //moon prism pink
+$color-pink-faded: rgba($color-pink, 0.8);
+$color-gold: #FFD23F; //moon prism gold
+$color-cyan: #0BC6D9; //retrowave cyan
 
 // variables
 $box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -19,20 +20,19 @@ $tablet-width: 768px;
 $desktop-width: 1024px;
 
 // theme variables
-$background: linear-gradient(150deg, #b39ddb, #cea0e3, #fcb4d5);
-// background: linear-gradient(150deg, #aa9cfc, #fc9ce7);
+$background: linear-gradient(180deg, #1b1035 0%, #4a1e6e 35%, #c2298a 70%, #ff8fd4 100%);
 
 // shared classes
 @mixin section-title-text {
     font-family: $font-sub-heading;
-    color: $color-green;
+    color: $color-pink;
     font-size: 40px;
     font-weight: 200;
 }
 
 @mixin section-sub-title-text {
     font-family: $font-sub-heading;
-    color: $color-green;
+    color: $color-pink;
     font-size: 30px;
     font-weight: 100;
     opacity: 0.7;
@@ -56,16 +56,16 @@ $background: linear-gradient(150deg, #b39ddb, #cea0e3, #fcb4d5);
     font-size: 16px;
 }
 
-@mixin green-button {
-    color: $color-green !important;
+@mixin pink-button {
+    color: $color-pink !important;
     font-family: $font-sub-heading !important;
 
     &:hover {
-        background-color: rgba($color-green, 0.2) !important;
+        background-color: rgba($color-pink, 0.2) !important;
     }
 
     &:active {
-        background-color: rgba($color-green, 0.4) !important;
+        background-color: rgba($color-pink, 0.4) !important;
         box-shadow: 0 2px rgba($color-black, 0.2);
         transform: translateY(4px);
     }

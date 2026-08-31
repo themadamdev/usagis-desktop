@@ -23,12 +23,12 @@ function NavTaskbar() {
 
     <TaskBar list={<List>
       <List.Item icon={<ReaderClosed variant="32x32_4" />} onClick={() => toggleSecond(true)}>
-        Local Disk (C:)
+        Moon Kingdom (C:)
       </List.Item>
       <List.Item icon={<WindowsExplorer variant="32x32_4" />} onClick={() => {
         toggleFirst(true);
       }}>
-        Windows Explorer
+        Crystal Explorer
       </List.Item>
     </List>} />
   </>

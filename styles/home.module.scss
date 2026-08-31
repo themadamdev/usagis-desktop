@@ -1,7 +1,46 @@
 @import './styles.scss';
 
 .gridOverlay {
+    position: relative;
     width: 100vw;
     height: 100vh;
-    background: url('../public/imgs/grid.png');
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 58%, rgba(255, 210, 63, 0.9) 0%, rgba(255, 210, 63, 0.45) 8%, rgba(255, 210, 63, 0) 16%),
+        radial-gradient(1px 1px at 12% 15%, $color-white, transparent),
+        radial-gradient(1px 1px at 28% 8%, $color-white, transparent),
+        radial-gradient(2px 2px at 45% 22%, $color-white, transparent),
+        radial-gradient(1px 1px at 62% 12%, $color-white, transparent),
+        radial-gradient(1px 1px at 78% 25%, $color-white, transparent),
+        radial-gradient(2px 2px at 88% 10%, $color-white, transparent),
+        radial-gradient(1px 1px at 95% 32%, $color-white, transparent),
+        radial-gradient(1px 1px at 8% 35%, $color-white, transparent),
+        radial-gradient(1px 1px at 68% 38%, $color-white, transparent),
+        $background;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: -50%;
+        bottom: 0;
+        width: 200%;
+        height: 46%;
+        background-image:
+            repeating-linear-gradient(90deg, rgba(11, 198, 217, 0.85) 0 2px, transparent 2px 46px),
+            repeating-linear-gradient(0deg, rgba(255, 111, 199, 0.85) 0 3px, transparent 3px 28px);
+        box-shadow: 0 0 24px 6px rgba(11, 198, 217, 0.35);
+        transform: perspective(500px) rotateX(55deg);
+        transform-origin: bottom;
+        pointer-events: none;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(0deg, transparent 0%, transparent 44%, rgba(255, 143, 212, 0.9) 46%, transparent 48%),
+            linear-gradient(0deg, rgba(27, 16, 53, 0.65) 0%, rgba(27, 16, 53, 0) 46%);
+        pointer-events: none;
+    }
 }
