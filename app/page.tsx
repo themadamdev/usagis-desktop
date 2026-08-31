@@ -3,6 +3,7 @@
 import NavTaskbar from '@/components/navTaskbar/NavTaskbar';
 import DesktopIcons from '@/components/desktopIcons/DesktopIcons';
 import PolaroidWidget from '@/components/polaroidWidget/PolaroidWidget';
+import MusicPlayerWidget from '@/components/musicPlayerWidget/MusicPlayerWidget';
 import styles from '@/styles/home.module.scss';
 import '@react95/core/GlobalStyle';
 import '@/styles/r95-moonlightRetrowave.css';
@@ -13,6 +14,7 @@ export default function HomePage() {
             <div className={styles.moon} />
             <DesktopIcons />
             <PolaroidWidget />
+            <MusicPlayerWidget />
             <NavTaskbar />
         </div>
     )

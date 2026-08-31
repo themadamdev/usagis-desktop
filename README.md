@@ -1,5 +1,4 @@
 # Usagi's Desktop 🖥️💖🪩 _est. Sept 2026_
-[![pages-build-deployment](https://github.com/mrsjlwhite/jlwhite-dev/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/mrsjlwhite/jlwhite-dev/actions/workflows/pages/pages-build-deployment)
 
 ## About 💫
 This is a made-for-fun react app of what Sailor Moon's desktop could look like 💖
@@ -9,8 +8,7 @@ This is a made-for-fun react app of what Sailor Moon's desktop could look like �
 TBD
 
 ### Visit 📍
-<!-- <a href="https://www.jlwhite.dev" target="_blank">jlwhite.dev</a> -->
-TBD
+<a href="usagis-desktop.vercel.app" target="_blank">usagis-desktop.vercel.app</a>
 
 ### Tech Used ⚙️
 - 💬 Languages

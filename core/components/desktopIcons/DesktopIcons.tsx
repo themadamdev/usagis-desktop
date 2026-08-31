@@ -1,8 +1,11 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Modal, TitleBar } from '@react95/core';
 import styles from './desktopIcons.module.scss';
+
+const ALBUM_STORAGE_KEY = 'usagi-photo-album';
+const DEFAULT_ALBUM: string[] = ['/imgs/usagi-polaroid-photo.jpeg'];
 
 type ScoutIcon = {
     id: string;
@@ -58,11 +61,47 @@ function ScoutGlyph({ glyph, accent }: { glyph: ScoutIcon['glyph']; accent: stri
     );
 }
 
+function FolderGlyph() {
+    return (
+        <svg viewBox="0 0 32 32" width="36" height="36">
+            <path d="M4 10a2 2 0 0 1 2-2h6l2.5 2.5H26a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="#ffb0e0" stroke="#fff6fb" strokeWidth="1" />
+            <path d="M4 12h24v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="#ff8fd4" stroke="#fff6fb" strokeWidth="1" />
+            <path d="M16 17.5l1.1 2.3 2.5.3-1.8 1.7.5 2.5-2.3-1.2-2.3 1.2.5-2.5-1.8-1.7 2.5-.3z" fill="#ffd23f" />
+        </svg>
+    );
+}
+
 function DesktopIcons() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [openId, setOpenId] = useState<string | null>(null);
+    const [albumOpen, setAlbumOpen] = useState(false);
+    const [album, setAlbum] = useState<string[]>(DEFAULT_ALBUM);
+    const albumFileInputRef = useRef<HTMLInputElement>(null);
 
     const openScout = scouts.find((scout) => scout.id === openId);
+
+    useEffect(() => {
+        const stored = localStorage.getItem(ALBUM_STORAGE_KEY);
+        if (stored) setAlbum(JSON.parse(stored));
+    }, []);
+
+    const persistAlbum = (photos: string[]) => {
+        setAlbum(photos);
+        localStorage.setItem(ALBUM_STORAGE_KEY, JSON.stringify(photos));
+    };
+
+    const handleAddAlbumPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => persistAlbum([...album, reader.result as string]);
+        reader.readAsDataURL(file);
+        event.target.value = '';
+    };
+
+    const handleRemoveAlbumPhoto = (index: number) => {
+        persistAlbum(album.filter((_, i) => i !== index));
+    };
 
     return (
         <div className={styles.iconLayer}>
@@ -79,18 +118,67 @@ function DesktopIcons() {
                 </button>
             ))}
 
+            <button
+                type="button"
+                className={`${styles.icon} ${selectedId === 'photo-album' ? styles.selected : ''}`}
+                onClick={() => setSelectedId('photo-album')}
+                onDoubleClick={() => setAlbumOpen(true)}
+            >
+                <FolderGlyph />
+                <span className={styles.label}>Photo Album</span>
+            </button>
+
             {openScout && (
                 <Modal
                     icon={<ScoutGlyph glyph={openScout.glyph} accent={openScout.accent} />}
                     title={openScout.name}
                     titleBarOptions={[<TitleBar.Close key="close" onClick={() => setOpenId(null)} />]}
-                    dragOptions={{ defaultPosition: { x: 160, y: 140 } }}
+                    dragOptions={{ defaultPosition: { x: 160, y: 340 } }}
                     width="260px"
                 >
                     <div className={styles.modalContent}>
                         <ScoutGlyph glyph={openScout.glyph} accent={openScout.accent} />
                         <p>{openScout.catchphrase}</p>
                     </div>
+                </Modal>
+            )}
+
+            {albumOpen && (
+                <Modal
+                    icon={<FolderGlyph />}
+                    title="Photo Album"
+                    titleBarOptions={[<TitleBar.Close key="close" onClick={() => setAlbumOpen(false)} />]}
+                    dragOptions={{ defaultPosition: { x: 380, y: 240 } }}
+                    width="280px"
+                >
+                    <div className={styles.albumGrid}>
+                        {album.map((photo, index) => (
+                            <div key={photo.slice(0, 32) + index} className={styles.albumThumb}>
+                                <img src={photo} alt="" />
+                                <button
+                                    type="button"
+                                    className={styles.albumRemove}
+                                    onClick={() => handleRemoveAlbumPhoto(index)}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            className={styles.albumAdd}
+                            onClick={() => albumFileInputRef.current?.click()}
+                        >
+                            +
+                        </button>
+                    </div>
+                    <input
+                        ref={albumFileInputRef}
+                        type="file"
+                        accept="image/*"
+                        className={styles.fileInput}
+                        onChange={handleAddAlbumPhoto}
+                    />
                 </Modal>
             )}
         </div>

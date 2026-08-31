@@ -56,16 +56,6 @@
     cursor: pointer;
 }
 
-.placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    font-family: $font-body;
-    font-size: 11px;
-    color: #b3789c;
-}
-
 .fileInput {
     position: absolute;
     width: 1px;
