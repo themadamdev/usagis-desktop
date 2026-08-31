@@ -1,14 +1,16 @@
-# My About-Me Site 🌲🏕️☁️ _est. Feb 2023_
+# Usagi's Desktop 🖥️💖🪩 _est. Sept 2026_
 [![pages-build-deployment](https://github.com/mrsjlwhite/jlwhite-dev/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/mrsjlwhite/jlwhite-dev/actions/workflows/pages/pages-build-deployment)
 
-## About 🍵
-This is a react app to talk a lil' about me, and for me to add some project examples along the way.
+## About 💫
+This is a made-for-fun react app of what Sailor Moon's desktop could look like 💖
 
 ### Preview 🖼️
-<image src='./public/imgs/siteSample.png'>
+<!-- <image src='./public/imgs/siteSample.png'> -->
+TBD
 
 ### Visit 📍
-<a href="https://www.jlwhite.dev" target="_blank">jlwhite.dev</a>
+<!-- <a href="https://www.jlwhite.dev" target="_blank">jlwhite.dev</a> -->
+TBD
 
 ### Tech Used ⚙️
 - 💬 Languages
