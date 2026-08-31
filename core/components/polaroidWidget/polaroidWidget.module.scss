@@ -1,0 +1,95 @@
+@import '../../../styles/styles.scss';
+
+.widget {
+    position: absolute;
+    z-index: 1;
+    touch-action: none;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+.card {
+    position: relative;
+    width: 150px;
+    padding: 10px 10px 14px;
+    background: $color-white;
+    box-shadow: 0 10px 24px rgba($color-black, 0.45);
+    animation: sway 6.5s ease-in-out infinite alternate;
+    transform-origin: top center;
+}
+
+@keyframes sway {
+    0% {
+        transform: rotate(-4deg) translateY(0);
+    }
+    100% {
+        transform: rotate(-1.5deg) translateY(-3px);
+    }
+}
+
+.tape {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 46px;
+    height: 18px;
+    transform: translateX(-50%) rotate(-2deg);
+    background: rgba($color-gold, 0.55);
+    border: 1px solid rgba($color-white, 0.5);
+    box-shadow: 0 1px 3px rgba($color-black, 0.25);
+}
+
+.photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 130px;
+    padding: 0;
+    border: none;
+    background-color: $color-off-white;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-family: $font-body;
+    font-size: 11px;
+    color: #b3789c;
+}
+
+.fileInput {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.caption {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: $font-heading-title;
+    font-size: 16px;
+    color: $color-black;
+
+    &:focus {
+        outline: 1px dashed $color-pink;
+    }
+}

@@ -21,8 +21,8 @@ const robotoSlab = Roboto_Slab({
 })
 
 export const metadata: Metadata = {
-    title: 'J.L. White',
-    description: 'Jeslyn L. White\'s personal developer website, in case you wanted to learn more about her.'
+    title: 'Usagi\'s Desktop',
+    description: 'Sailor Moon\'s desktop.'
 }
 
 export default function RootLayout({
