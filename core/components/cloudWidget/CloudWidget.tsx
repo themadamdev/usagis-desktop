@@ -46,6 +46,24 @@ function PixelSpriteSvg({ sprite, cell, x, y }: { sprite: PixelSprite; cell: num
     );
 }
 
+// 2x2 ordered (Bayer) dither matrix, used to blend between adjacent ramp
+// colors at band boundaries so shading reads as a gradient, not hard bands.
+const BAYER_2X2 = [
+    [0, 2],
+    [3, 1],
+];
+
+function ditherShade(ramp: string[], t: number, col: number, row: number): string {
+    const scaled = Math.max(0, Math.min(1, t)) * (ramp.length - 1);
+    const index = Math.floor(scaled);
+    const frac = scaled - index;
+    const colorA = ramp[Math.min(index, ramp.length - 1)];
+    const colorB = ramp[Math.min(index + 1, ramp.length - 1)];
+    if (colorA === colorB) return colorA;
+    const threshold = (BAYER_2X2[row & 1][col & 1] + 0.5) / 4;
+    return frac > threshold ? colorB : colorA;
+}
+
 const CLOUD_COLS = 40;
 const CLOUD_ROWS = 18;
 const CLOUD_PUFFS = [
@@ -62,13 +80,16 @@ function isCloudCell(col: number, row: number): boolean {
     return CLOUD_PUFFS.some((p) => (x - p.cx) ** 2 + (y - p.cy) ** 2 <= p.r * p.r);
 }
 
-function shadeCloud(_col: number, row: number): string {
-    if (row <= 3) return '#fff6fb';
-    if (row >= 13) return '#e88fc0';
-    return '#ffb0e0';
+// Highlight -> pink -> hue-shifted into purple for the deepest shadow, a
+// classic hand-pixel-art trick (shadows lean toward a cooler hue, not just
+// a darker version of the base color).
+const CLOUD_RAMP = ['#ffffff', '#ffe3f5', '#ffb0e0', '#e888c9', '#b565c9', '#7a4aa8'];
+
+function shadeCloud(col: number, row: number): string {
+    return ditherShade(CLOUD_RAMP, row / CLOUD_ROWS, col, row);
 }
 
-const CLOUD_SPRITE = buildPixelSprite(CLOUD_COLS, CLOUD_ROWS, CELL, isCloudCell, shadeCloud, '#2a1a4a');
+const CLOUD_SPRITE = buildPixelSprite(CLOUD_COLS, CLOUD_ROWS, CELL, isCloudCell, shadeCloud, '#1c1235');
 
 const MOON_COLS = 10;
 const MOON_ROWS = 10;
@@ -83,7 +104,13 @@ function isMoonCell(col: number, row: number): boolean {
     return inMain && !inBite;
 }
 
-const MOON_SPRITE = buildPixelSprite(MOON_COLS, MOON_ROWS, CELL, isMoonCell, () => '#ffd23f', '#2a1a4a');
+const MOON_RAMP = ['#fff6c4', '#ffd23f', '#e0932e'];
+
+function shadeMoon(col: number, row: number): string {
+    return ditherShade(MOON_RAMP, row / MOON_ROWS, col, row);
+}
+
+const MOON_SPRITE = buildPixelSprite(MOON_COLS, MOON_ROWS, CELL, isMoonCell, shadeMoon, '#1c1235');
 
 const SPARKLE_COLS = 5;
 const SPARKLE_ROWS = 5;
@@ -93,12 +120,13 @@ function isSparkleCell(col: number, row: number): boolean {
     return SPARKLE_FILLED.has(`${col},${row}`);
 }
 
-function buildSparkleSprite(color: string): PixelSprite {
-    return buildPixelSprite(SPARKLE_COLS, SPARKLE_ROWS, CELL, isSparkleCell, () => color, color);
+function buildSparkleSprite(ramp: string[]): PixelSprite {
+    const shade = (col: number, row: number) => ditherShade(ramp, row / SPARKLE_ROWS, col, row);
+    return buildPixelSprite(SPARKLE_COLS, SPARKLE_ROWS, CELL, isSparkleCell, shade, ramp[ramp.length - 1]);
 }
 
-const SPARKLE_CYAN = buildSparkleSprite('#0bc6d9');
-const SPARKLE_PINK = buildSparkleSprite('#ff6ec7');
+const SPARKLE_CYAN = buildSparkleSprite(['#d6faff', '#0bc6d9', '#0a7f94']);
+const SPARKLE_PINK = buildSparkleSprite(['#ffe0f6', '#ff6ec7', '#a83f9e']);
 
 function CloudWidget({ visible }: { visible: boolean }) {
     const { position, handlePointerDown, handlePointerMove, handlePointerUp } = useDraggableWidget(
