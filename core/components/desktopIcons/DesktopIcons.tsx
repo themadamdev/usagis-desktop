@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Modal, TitleBar } from '@react95/core';
 import styles from './desktopIcons.module.scss';
 
@@ -85,6 +85,48 @@ function CloudGlyph() {
     );
 }
 
+function LunaGlyph() {
+    return (
+        <svg viewBox="0 0 32 32" width="36" height="36">
+            <circle cx="16" cy="16" r="15" fill="#2a1a4a" stroke="#fff6fb" strokeWidth="1" />
+            <path d="M10 12l1.6-3.4 2.4 2.4h4l2.4-2.4L22 12v6a6 6 0 0 1-12 0z" fill="#4b3a75" />
+            <circle cx="13.2" cy="16" r="1.1" fill="#fff6fb" />
+            <circle cx="18.8" cy="16" r="1.1" fill="#fff6fb" />
+            <path d="M16 18.2l-1.1 1.1h2.2z" fill="#ff9fce" />
+            <defs>
+                <mask id="luna-mark-mask">
+                    <rect width="32" height="32" fill="white" />
+                    <circle cx="17.3" cy="10.3" r="1.4" fill="black" />
+                </mask>
+            </defs>
+            <circle cx="16" cy="10.8" r="1.6" fill="#ffd23f" mask="url(#luna-mark-mask)" />
+        </svg>
+    );
+}
+
+function ArcadeGlyph() {
+    return (
+        <svg viewBox="0 0 32 32" width="36" height="36">
+            <rect x="6" y="4" width="20" height="24" rx="2" fill="#2a1a4a" stroke="#fff6fb" strokeWidth="1" />
+            <rect x="9" y="7" width="14" height="9" rx="1" fill="#0bc6d9" />
+            <circle cx="12" cy="21.5" r="2" fill="#ff6ec7" />
+            <circle cx="18" cy="21.5" r="1.5" fill="#ffd23f" />
+            <circle cx="22" cy="19.5" r="1.5" fill="#ffd23f" />
+        </svg>
+    );
+}
+
+function BinGlyph() {
+    return (
+        <svg viewBox="0 0 32 32" width="36" height="36">
+            <rect x="13" y="5" width="6" height="3" rx="1" fill="#ffb0e0" />
+            <rect x="7" y="8" width="18" height="3" rx="1" fill="#ffb0e0" />
+            <path d="M9 11h14l-1.4 15a2 2 0 0 1-2 1.8h-7.2a2 2 0 0 1-2-1.8z" fill="#2a1a4a" stroke="#fff6fb" strokeWidth="1" />
+            <path d="M12.5 14.5l0.6 9.5M16 14.5v9.5M19.5 14.5l-0.6 9.5" stroke="#ffd23f" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+    );
+}
+
 type DesktopIconsProps = {
     cloudVisible: boolean;
     onToggleCloud: () => void;
@@ -96,6 +138,9 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
     const [albumOpen, setAlbumOpen] = useState(false);
     const [album, setAlbum] = useState<string[]>(DEFAULT_ALBUM);
     const albumFileInputRef = useRef<HTMLInputElement>(null);
+    const [lunaOpen, setLunaOpen] = useState(false);
+    const [arcadeOpen, setArcadeOpen] = useState(false);
+    const [binOpen, setBinOpen] = useState(false);
 
     const openScout = scouts.find((scout) => scout.id === openId);
 
@@ -123,6 +168,7 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
     };
 
     return (
+        <Fragment>
         <div className={styles.iconLayer}>
             {scouts.map((scout) => (
                 <button
@@ -156,6 +202,41 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
                 <CloudGlyph />
                 <span className={styles.label}>cloud.exe</span>
             </button>
+
+            <button
+                type="button"
+                className={`${styles.icon} ${selectedId === 'luna' ? styles.selected : ''}`}
+                onClick={() => setSelectedId('luna')}
+                onDoubleClick={() => setLunaOpen(true)}
+            >
+                <LunaGlyph />
+                <span className={styles.label}>Luna's Notebook</span>
+            </button>
+        </div>
+
+        <div className={styles.iconLayerSecondary}>
+            <button
+                type="button"
+                className={`${styles.icon} ${selectedId === 'arcade' ? styles.selected : ''}`}
+                onClick={() => setSelectedId('arcade')}
+                onDoubleClick={() => setArcadeOpen(true)}
+            >
+                <ArcadeGlyph />
+                <span className={styles.label}>Sailor V Arcade</span>
+            </button>
+        </div>
+
+        <div className={styles.binLayer}>
+            <button
+                type="button"
+                className={`${styles.icon} ${selectedId === 'bin' ? styles.selected : ''}`}
+                onClick={() => setSelectedId('bin')}
+                onDoubleClick={() => setBinOpen(true)}
+            >
+                <BinGlyph />
+                <span className={styles.label}>Moon Dust Bin</span>
+            </button>
+        </div>
 
             {openScout && (
                 <Modal
@@ -210,7 +291,57 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
                     />
                 </Modal>
             )}
-        </div>
+
+            {lunaOpen && (
+                <Modal
+                    icon={<LunaGlyph />}
+                    title="Luna's Notebook"
+                    titleBarOptions={[<TitleBar.Close key="close" onClick={() => setLunaOpen(false)} />]}
+                    dragOptions={{ defaultPosition: { x: 460, y: 340 } }}
+                    width="240px"
+                >
+                    <div className={styles.notebook}>
+                        <p>📓 Guardian Log</p>
+                        <p>Status: all quiet in Crystal Tokyo.</p>
+                        <p>Reminder: don't oversleep for school again, Usagi.</p>
+                    </div>
+                </Modal>
+            )}
+
+            {arcadeOpen && (
+                <Modal
+                    icon={<ArcadeGlyph />}
+                    title="SAILOR V"
+                    titleBarOptions={[<TitleBar.Close key="close" onClick={() => setArcadeOpen(false)} />]}
+                    dragOptions={{ defaultPosition: { x: 200, y: 420 } }}
+                    width="240px"
+                >
+                    <div className={styles.arcadeScreen}>
+                        <p className={styles.arcadeTitle}>HIGH SCORES</p>
+                        <ol>
+                            <li>VENUS&nbsp;&nbsp;&nbsp;&nbsp;999990</li>
+                            <li>MOON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;888880</li>
+                            <li>MERCURY&nbsp;&nbsp;777770</li>
+                        </ol>
+                        <p className={styles.arcadeBlink}>INSERT COIN ▸</p>
+                    </div>
+                </Modal>
+            )}
+
+            {binOpen && (
+                <Modal
+                    icon={<BinGlyph />}
+                    title="Moon Dust Bin"
+                    titleBarOptions={[<TitleBar.Close key="close" onClick={() => setBinOpen(false)} />]}
+                    dragOptions={{ defaultPosition: { x: 700, y: 420 } }}
+                    width="220px"
+                >
+                    <div className={styles.modalContent}>
+                        <p>✨ empty — no youma today ✨</p>
+                    </div>
+                </Modal>
+            )}
+        </Fragment>
     );
 }
 
