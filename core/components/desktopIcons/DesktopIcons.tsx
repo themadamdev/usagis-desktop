@@ -71,7 +71,26 @@ function FolderGlyph() {
     );
 }
 
-function DesktopIcons() {
+function CloudGlyph() {
+    return (
+        <svg viewBox="0 0 36 36" width="36" height="36">
+            <g fill="#ffe3f5">
+                <circle cx="12" cy="21" r="7" />
+                <circle cx="21" cy="14" r="9" />
+                <circle cx="29" cy="20" r="6.5" />
+                <rect x="10" y="18" width="22" height="10" rx="5" />
+            </g>
+            <path d="M6 8l1.3 3.7L11 13l-3.7 1.3L6 18l-1.3-3.7L1 13l3.7-1.3z" fill="#ffd23f" />
+        </svg>
+    );
+}
+
+type DesktopIconsProps = {
+    cloudVisible: boolean;
+    onToggleCloud: () => void;
+};
+
+function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [openId, setOpenId] = useState<string | null>(null);
     const [albumOpen, setAlbumOpen] = useState(false);
@@ -126,6 +145,16 @@ function DesktopIcons() {
             >
                 <FolderGlyph />
                 <span className={styles.label}>Photo Album</span>
+            </button>
+
+            <button
+                type="button"
+                className={`${styles.icon} ${selectedId === 'cloud-exe' ? styles.selected : ''} ${cloudVisible ? styles.running : ''}`}
+                onClick={() => setSelectedId('cloud-exe')}
+                onDoubleClick={onToggleCloud}
+            >
+                <CloudGlyph />
+                <span className={styles.label}>cloud.exe</span>
             </button>
 
             {openScout && (

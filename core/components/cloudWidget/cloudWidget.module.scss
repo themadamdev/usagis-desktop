@@ -1,0 +1,75 @@
+@import '../../../styles/styles.scss';
+
+.widget {
+    position: absolute;
+    z-index: 1;
+    touch-action: none;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+.panel {
+    position: relative;
+    width: 190px;
+    background: var(--r95-color-material);
+    box-shadow: var(--r95-shadow-out);
+}
+
+.titleBar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    background: var(--r95-color-headerBackground);
+}
+
+.titleIcon {
+    font-size: 12px;
+}
+
+.titleText {
+    color: var(--r95-color-headerText);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.content {
+    padding: 10px;
+    overflow: visible;
+}
+
+.viewport {
+    position: relative;
+    height: 130px;
+    margin-bottom: 8px;
+    background: var(--r95-color-canvas);
+    box-shadow: var(--r95-shadow-in);
+    overflow: visible;
+}
+
+.cloudPeek {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    animation: bob 5s ease-in-out infinite;
+}
+
+@keyframes bob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.caption {
+    margin: 0;
+    color: var(--r95-color-materialText);
+    font-family: $font-body;
+    font-size: 11px;
+}

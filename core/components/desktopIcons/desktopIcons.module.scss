@@ -30,6 +30,18 @@
         background: rgba($color-cyan, 0.28);
         border: 1px dashed rgba($color-white, 0.7);
     }
+
+    &.running .label::after {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        margin-left: 4px;
+        border-radius: 50%;
+        background: $color-gold;
+        box-shadow: 0 0 4px $color-gold;
+        vertical-align: middle;
+    }
 }
 
 .label {
