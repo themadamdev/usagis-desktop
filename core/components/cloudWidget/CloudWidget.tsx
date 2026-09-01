@@ -1,9 +1,12 @@
 'use client'
 
 import { useDraggableWidget } from '@/hooks/useDraggableWidget';
+import { useIsCompact } from '@/hooks/useIsCompact';
 import styles from './cloudWidget.module.scss';
 
-const DEFAULT_POSITION = { x: 600, y: 130 };
+const DESKTOP_POSITION = { x: 600, y: 130 };
+const COMPACT_POSITION = { x: 16, y: 992 };
+const WIDGET_SIZE = { width: 250, height: 210 };
 
 const CELL = 5;
 
@@ -129,9 +132,11 @@ const SPARKLE_CYAN = buildSparkleSprite(['#d6faff', '#0bc6d9', '#0a7f94']);
 const SPARKLE_PINK = buildSparkleSprite(['#ffe0f6', '#ff6ec7', '#a83f9e']);
 
 function CloudWidget({ visible }: { visible: boolean }) {
+    const isCompact = useIsCompact();
     const { position, handlePointerDown, handlePointerMove, handlePointerUp } = useDraggableWidget(
         'usagi-cloud-widget-position',
-        DEFAULT_POSITION
+        isCompact ? COMPACT_POSITION : DESKTOP_POSITION,
+        WIDGET_SIZE
     );
 
     if (!visible) return null;

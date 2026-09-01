@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { Modal, TitleBar } from '@react95/core';
+import { useIsCompact } from '@/hooks/useIsCompact';
 import styles from './desktopIcons.module.scss';
 
 const ALBUM_STORAGE_KEY = 'usagi-photo-album';
@@ -141,6 +142,10 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
     const [lunaOpen, setLunaOpen] = useState(false);
     const [arcadeOpen, setArcadeOpen] = useState(false);
     const [binOpen, setBinOpen] = useState(false);
+    const isCompact = useIsCompact();
+
+    const modalPosition = (desktopPosition: { x: number; y: number }) =>
+        isCompact ? { x: 16, y: 70 } : desktopPosition;
 
     const openScout = scouts.find((scout) => scout.id === openId);
 
@@ -243,7 +248,7 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
                     icon={<ScoutGlyph glyph={openScout.glyph} accent={openScout.accent} />}
                     title={openScout.name}
                     titleBarOptions={[<TitleBar.Close key="close" onClick={() => setOpenId(null)} />]}
-                    dragOptions={{ defaultPosition: { x: 160, y: 340 } }}
+                    dragOptions={{ defaultPosition: modalPosition({ x: 160, y: 340 }) }}
                     width="260px"
                 >
                     <div className={styles.modalContent}>
@@ -258,7 +263,7 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
                     icon={<FolderGlyph />}
                     title="Photo Album"
                     titleBarOptions={[<TitleBar.Close key="close" onClick={() => setAlbumOpen(false)} />]}
-                    dragOptions={{ defaultPosition: { x: 380, y: 240 } }}
+                    dragOptions={{ defaultPosition: modalPosition({ x: 380, y: 240 }) }}
                     width="280px"
                 >
                     <div className={styles.albumGrid}>
@@ -297,7 +302,7 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
                     icon={<LunaGlyph />}
                     title="Luna's Notebook"
                     titleBarOptions={[<TitleBar.Close key="close" onClick={() => setLunaOpen(false)} />]}
-                    dragOptions={{ defaultPosition: { x: 460, y: 340 } }}
+                    dragOptions={{ defaultPosition: modalPosition({ x: 460, y: 340 }) }}
                     width="240px"
                 >
                     <div className={styles.notebook}>
@@ -313,7 +318,7 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
                     icon={<ArcadeGlyph />}
                     title="SAILOR V"
                     titleBarOptions={[<TitleBar.Close key="close" onClick={() => setArcadeOpen(false)} />]}
-                    dragOptions={{ defaultPosition: { x: 200, y: 420 } }}
+                    dragOptions={{ defaultPosition: modalPosition({ x: 200, y: 420 }) }}
                     width="240px"
                 >
                     <div className={styles.arcadeScreen}>
@@ -333,7 +338,7 @@ function DesktopIcons({ cloudVisible, onToggleCloud }: DesktopIconsProps) {
                     icon={<BinGlyph />}
                     title="Moon Dust Bin"
                     titleBarOptions={[<TitleBar.Close key="close" onClick={() => setBinOpen(false)} />]}
-                    dragOptions={{ defaultPosition: { x: 700, y: 420 } }}
+                    dragOptions={{ defaultPosition: modalPosition({ x: 700, y: 420 }) }}
                     width="220px"
                 >
                     <div className={styles.modalContent}>

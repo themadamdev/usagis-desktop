@@ -2,21 +2,26 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useDraggableWidget } from '@/hooks/useDraggableWidget';
+import { useIsCompact } from '@/hooks/useIsCompact';
 import styles from './polaroidWidget.module.scss';
 
 const PHOTO_STORAGE_KEY = 'usagi-polaroid-photo';
 const CAPTION_STORAGE_KEY = 'usagi-polaroid-caption';
 const DEFAULT_PHOTO_SRC = '/imgs/usagi-polaroid-photo.jpeg';
 const DEFAULT_CAPTION = 'sailor moon 💫';
-const DEFAULT_POSITION = { x: 140, y: 90 };
+const DESKTOP_POSITION = { x: 140, y: 90 };
+const COMPACT_POSITION = { x: 16, y: 560 };
+const WIDGET_SIZE = { width: 170, height: 220 };
 
 function PolaroidWidget() {
     const [photo, setPhoto] = useState<string>(DEFAULT_PHOTO_SRC);
     const [caption, setCaption] = useState(DEFAULT_CAPTION);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const isCompact = useIsCompact();
     const { position, handlePointerDown, handlePointerMove, handlePointerUp } = useDraggableWidget(
         'usagi-polaroid-position',
-        DEFAULT_POSITION
+        isCompact ? COMPACT_POSITION : DESKTOP_POSITION,
+        WIDGET_SIZE
     );
 
     useEffect(() => {

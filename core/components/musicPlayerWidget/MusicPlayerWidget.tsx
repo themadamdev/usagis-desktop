@@ -2,9 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useDraggableWidget } from '@/hooks/useDraggableWidget';
+import { useIsCompact } from '@/hooks/useIsCompact';
 import styles from './musicPlayerWidget.module.scss';
 
-const DEFAULT_POSITION = { x: 340, y: 90 };
+const DESKTOP_POSITION = { x: 340, y: 90 };
+const COMPACT_POSITION = { x: 16, y: 796 };
+const WIDGET_SIZE = { width: 220, height: 180 };
 const DEFAULT_TITLE = 'Moonlight Densetsu';
 const DEFAULT_SUBTITLE = 'tap 🎵 to add your own song';
 
@@ -14,9 +17,11 @@ function MusicPlayerWidget() {
     const [trackUrl, setTrackUrl] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const isCompact = useIsCompact();
     const { position, handlePointerDown, handlePointerMove, handlePointerUp } = useDraggableWidget(
         'usagi-music-player-position',
-        DEFAULT_POSITION
+        isCompact ? COMPACT_POSITION : DESKTOP_POSITION,
+        WIDGET_SIZE
     );
 
     useEffect(() => {
