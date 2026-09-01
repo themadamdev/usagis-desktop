@@ -4,11 +4,10 @@
 This is a made-for-fun react app of what Sailor Moon's desktop could look like 💖
 
 ### Preview 🖼️
-<!-- <image src='./public/imgs/siteSample.png'> -->
-TBD
+<image src='./public/imgs/siteSample.png'>
 
 ### Visit 📍
-<a href="usagis-desktop.vercel.app" target="_blank">usagis-desktop.vercel.app</a>
+<a href="https://usagis-desktop.vercel.app/" target="_blank">usagis-desktop.vercel.app</a>
 
 ### Tech Used ⚙️
 - 💬 Languages
